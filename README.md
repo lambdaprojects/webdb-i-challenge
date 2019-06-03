@@ -44,6 +44,14 @@ Visit [SQL Try Editor at W3Schools.com](https://www.w3schools.com/Sql/tryit.asp?
 
 ## Answer: select \* from Customers where customerName like "%market%";
 
+- add a customer record for "The Shire", the contact name is "Bilbo Baggins" the address is "1 Hobbit-Hole" in "Bag End", postal code "111" and the country is "Middle Earth".
+
+## Answer: insert into customers (customerName,contactName, Address, city, postalcode, country) values ("The Shire", "Bilbo Baggins","1 Hobbit-Hole", "Bag End", "111", "Middle Earth" );
+
+- update Bilbo Baggins record so that the postal code changes to "11122".
+
+## Answer: update customers set postalcode = "11122" where customername like "%Shire";
+
 **Clicking the `Restore Database` button in the page will repopulate the database with the original data and discard all changes you have made**.
 
 ### Create Database and Table
