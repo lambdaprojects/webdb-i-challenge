@@ -56,6 +56,19 @@ router.put("/:id", validateAccountsId, validateAccount, async (req, res) => {
   }
 });
 
+//DELETE AN ACCOUNT
+router.delete("/:id", validateAccountsId, async (req, res) => {
+  try {
+    const accountId = req.params.id;
+    const deleteAccount = await accountsHelper.remove(accountId);
+    res.status(200).json({ SUCCESS_MESSAGE: "Account deleted successfully." });
+  } catch (error) {
+    res.status(500).json({
+      ERROR_MESSAGE: "There was an error while deleting the account."
+    });
+  }
+});
+
 // This is a custom middleware function to validate accounts Id
 // The following validations have been performed.
 // 1. Check if the id exist in the req params.
