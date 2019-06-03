@@ -20,13 +20,25 @@ router.get("/", async (req, res) => {
   }
 });
 
-// GET PROJECT FOR THE ID PASSED AS PARAM
+// GET ACCOUNT FOR THE ID PASSED AS PARAM
 router.get("/:id", validateAccountsId, async (req, res) => {
   try {
     res.status(200).json(req.account);
   } catch (error) {
     res.status(500).json({
       ERROR_MESSAGE: "There was an error while retrieving the accounts."
+    });
+  }
+});
+
+//ADD AN ACCOUNT
+router.post("/", validateAccount, async (req, res) => {
+  try {
+    const account = await accountsHelper.add(req.body);
+    res.status(200).json(account);
+  } catch (error) {
+    res.status(500).json({
+      ERROR_MESSAGE: "There was an error while inserting the account."
     });
   }
 });
@@ -58,6 +70,25 @@ async function validateAccountsId(req, res, next) {
     res
       .status(400)
       .json({ ERROR_MESSAGE: "There is no account id available." });
+  }
+}
+
+//This is a custom middleware to validate a project
+// Following are the validations:
+// 1. Validates the body on a request to create a new project
+// 2. validate if request body is not missing else 400
+// 3. validate if the request body has the name and description field
+function validateAccount(req, res, next) {
+  if (req.body) {
+    if (req.body.name && req.body.budget) {
+      next();
+    } else {
+      res.status(400).json({
+        ERROR_MESSAGE: "Missing required name field or budget field"
+      });
+    }
+  } else {
+    res.status(400).json({ ERROR_MESSAGE: "Missing account data." });
   }
 }
 module.exports = router;
