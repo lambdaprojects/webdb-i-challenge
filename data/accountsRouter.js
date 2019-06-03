@@ -43,6 +43,19 @@ router.post("/", validateAccount, async (req, res) => {
   }
 });
 
+//UPDATE AN ACCOUNT
+router.put("/:id", validateAccountsId, validateAccount, async (req, res) => {
+  try {
+    const accountId = req.params.id;
+    const updateAccount = await accountsHelper.update(accountId, req.body);
+    res.status(200).json(updateAccount);
+  } catch (error) {
+    res.status(500).json({
+      ERROR_MESSAGE: "There was an error while updating the account."
+    });
+  }
+});
+
 // This is a custom middleware function to validate accounts Id
 // The following validations have been performed.
 // 1. Check if the id exist in the req params.
